@@ -1,6 +1,6 @@
 {
-  "name": "@ronaksoft/river-service",
-  "version": "0.1.0",
+  "name": "river-service",
+  "version": "0.1.2",
   "description": "River.im Application injector in webpage",
   "main": "build/index.js",
   "scripts": {
