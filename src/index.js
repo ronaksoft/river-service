@@ -64,7 +64,7 @@ class RiverService {
 
   init() {
     let div;
-    if (this.el && div.style) {
+    if (this.el && this.el.style) {
       div = this.el;
       div.style.cssText = "";
       div.className = "";
