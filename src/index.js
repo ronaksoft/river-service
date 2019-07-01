@@ -75,8 +75,8 @@ class RiverService {
     if (this.rtl) {
       div.classList.add("rtl");
     }
-    if (this.dark) {
-      div.classList.add("theme-" + this.dark);
+    if (this.theme) {
+      div.classList.add("theme-" + this.theme);
     }
     div.setAttribute("id", "river-embed");
     div.innerHTML = `<div id="river-iframe">
