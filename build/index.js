@@ -1,6 +1,6 @@
 /*!
  * 
- *   river-service v0.1.6
+ *   river-service v0.1.7
  *   https://github.com/ronaksoft/river-service
  * 
  *   Copyright (c) RSG developers (https://github.com/ronaksoft)

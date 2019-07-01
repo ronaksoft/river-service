@@ -19,6 +19,7 @@ class RiverService {
     this.onload = null;
     this.visible = false;
     this.rtl = params.rtl || false;
+    this.theme = params.theme || false;
     this.url = params.url || "https://web.river.im";
     this.el = params.el || null;
     this.init();
@@ -74,6 +75,9 @@ class RiverService {
     if (this.rtl) {
       div.classList.add("rtl");
     }
+    if (this.dark) {
+      div.classList.add("theme-" + this.dark);
+    }
     div.setAttribute("id", "river-embed");
     div.innerHTML = `<div id="river-iframe">
       <div class="river-mask"></div>
@@ -112,6 +116,15 @@ class RiverService {
       } else {
         el.classList.remove("rtl");
       }
+    }
+  }
+
+  setTheme(theme) {
+    const el = document.querySelector("#river-embed");
+    if (el) {
+      el.classList.add("theme-" + theme);
+      el.classList.remove("theme-" + this.theme);
+      this.theme = theme;
     }
   }
 

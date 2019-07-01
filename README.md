@@ -26,6 +26,7 @@ npm install river-service
 ```js
 const opts = {
     rtl: false,
+    theme: 'dark',
 };
 const userInfo = {
     firstname: 'FIRST_NAME',
@@ -48,6 +49,7 @@ srv.onload = () => {
 | ------------- |:--------------------:| -----------:|
 | url           |https://web.river.im  | string      |
 | rtl           |false                 | boolean     |
+| theme         |''                    | string     |
 | el            |(appends new element) | HTMLElement |
 
 ## User info object <userInfo>
@@ -64,6 +66,7 @@ srv.onload = () => {
 + toggleVisible(boolean)
 toggles visibility of badge
 + setRTL(boolean)
++ setTheme(string)
 
 
 ## ✅ Websites built with this lib
