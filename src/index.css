@@ -37,7 +37,7 @@
   z-index: 10;
   transition: all 0.3s;
 }
-#river-iframe.theme-dark .river-mask {
+#river-embed.theme-dark .river-mask {
   background: #222222cc;
 }
 
