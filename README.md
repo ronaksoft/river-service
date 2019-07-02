@@ -62,16 +62,16 @@ srv.onload = () => {
 
 ## ✍️ Methods
 
-+ setUserInfo(userInfo)
-+ toggleVisible(boolean)
++ `setUserInfo(userInfo)`
++ `toggleVisible(boolean)`
 toggles visibility of badge
-+ setRTL(boolean)
-+ setTheme(string)
-+ halt()
++ `setRTL(boolean)`
++ `setTheme(string)`
++ `halt()`
 Removes iframe from page temprorary but still button is in access.
-+ resume()
++ `resume()`
 Inserts the iframe in page.
-+ destroy()
++ `destroy()`
 Removes element from page.
 
 

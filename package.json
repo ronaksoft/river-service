@@ -1,6 +1,6 @@
 {
   "name": "river-service",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "River.im Application injector in webpage",
   "main": "build/index.js",
   "scripts": {

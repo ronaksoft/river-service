@@ -28,8 +28,6 @@ class RiverService {
 
     RiverService.instance = this;
 
-    this.iframe = document.querySelector(`${this.iframeEl} iframe`);
-
     window.addEventListener("message", e => {
       if (e.data) {
         try {
@@ -47,13 +45,19 @@ class RiverService {
       }
     });
 
+    this.initIframe();
+
+    return this;
+  }
+
+  initIframe() {
+    this.iframe = document.querySelector(`${this.iframeEl} iframe`);
+
     this.iframe.onload = () => {
       this.riverLoaded();
       this.anchor = document.querySelector(this.anchorEl);
       if (this.anchor) {
-        this.anchor.addEventListener("click", () => {
-          this.openChat();
-        });
+        this.anchor.addEventListener("click", this.openChat.bind(this));
         this.anchor.classList.remove("hide");
       }
       this.visible = true;
@@ -61,8 +65,6 @@ class RiverService {
         this.onload();
       }
     };
-
-    return this;
   }
 
   init() {
@@ -91,12 +93,12 @@ class RiverService {
   <div id="river-anchor" class="hide">
       <div class="badge">0</div>
   </div>`;
-    div.addEventListener("click", this.resume);
   }
 
   halt() {
     this.halted = true;
-    let el = document.querySelector("#river-iframe iframe");
+    this.closeChat();
+    let el = document.querySelector(this.iframeEl + " iframe");
     if (el) {
       el.remove();
     }
@@ -106,13 +108,14 @@ class RiverService {
     if (!this.halted) {
       return;
     }
-    this.halt = false;
-    let el = document.querySelector("#river-iframe");
+    this.halted = false;
+    let el = document.querySelector(this.iframeEl);
     let iframe = document.createElement("iframe");
     iframe.src = this.url;
     if (el) {
       el.appendChild(iframe);
     }
+    this.initIframe();
   }
 
   toggleVisible(visible) {
@@ -122,7 +125,6 @@ class RiverService {
       this.visible = visible;
     }
     const el = document.querySelector(this.parentEl);
-    window.console.log(this.visible);
     if (el) {
       if (!this.visible) {
         el.classList.add("hide");
@@ -217,6 +219,9 @@ class RiverService {
   }
 
   openChat() {
+    if (this.halted) {
+      this.resume();
+    }
     if (this.riverOpen) {
       return;
     }
@@ -351,7 +356,10 @@ class RiverService {
     var el = document.querySelector(this.parentEl);
     if (el) {
       el.remove();
-      el.removeEventListener("click", this.resume);
+      this.anchor = document.querySelector(this.anchorEl);
+      if (this.anchor) {
+        this.anchor.removeEventListener("click", this.openChat.bind(this));
+      }
     }
   }
 }
