@@ -13,6 +13,7 @@ class RiverService {
     this.fnIndex = 0;
     this.reqId = 0;
     this.messageListeners = {};
+    this.parentEl = `#river-embed`;
     this.iframeEl = `#river-iframe`;
     this.anchorEl = `#river-anchor`;
     this.riverOpen = false;
@@ -78,7 +79,7 @@ class RiverService {
     if (this.theme) {
       div.classList.add("theme-" + this.theme);
     }
-    div.setAttribute("id", "river-embed");
+    div.setAttribute("id", this.parentEl.replace("#", ""));
     div.innerHTML = `<div id="river-iframe">
       <div class="river-mask"></div>
       <iframe src="${this.url}">
@@ -97,7 +98,7 @@ class RiverService {
     } else {
       this.visible = visible;
     }
-    const el = document.querySelector("#river-embed");
+    const el = document.querySelector(this.parentEl);
     window.console.log(this.visible);
     if (el) {
       if (!this.visible) {
@@ -109,7 +110,7 @@ class RiverService {
   }
 
   setRTL(enable) {
-    const el = document.querySelector("#river-embed");
+    const el = document.querySelector(this.parentEl);
     if (el) {
       if (enable) {
         el.classList.add("rtl");
@@ -120,7 +121,7 @@ class RiverService {
   }
 
   setTheme(theme) {
-    const el = document.querySelector("#river-embed");
+    const el = document.querySelector(this.parentEl);
     if (el) {
       el.classList.add("theme-" + theme);
       el.classList.remove("theme-" + this.theme);
@@ -143,6 +144,11 @@ class RiverService {
     this.listen("close", e => {
       this.bool(e.reqId);
       this.closeChat();
+    });
+
+    this.listen("new_session", e => {
+      this.bool(e.reqId);
+      this.destroy();
     });
   }
 
@@ -317,6 +323,8 @@ class RiverService {
       });
     }
   }
+
+  destroy() {}
 }
 
 export default RiverService;
