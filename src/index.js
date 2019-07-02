@@ -19,6 +19,7 @@ class RiverService {
     this.riverOpen = false;
     this.onload = null;
     this.visible = false;
+    this.halted = false;
     this.rtl = params.rtl || false;
     this.theme = params.theme || false;
     this.url = params.url || "https://web.river.im";
@@ -72,6 +73,7 @@ class RiverService {
       div.className = "";
     } else {
       div = document.createElement("div");
+      document.body.appendChild(div);
     }
     if (this.rtl) {
       div.classList.add("rtl");
@@ -89,7 +91,28 @@ class RiverService {
   <div id="river-anchor" class="hide">
       <div class="badge">0</div>
   </div>`;
-    document.body.appendChild(div);
+    div.addEventListener("click", this.resume);
+  }
+
+  halt() {
+    this.halted = true;
+    let el = document.querySelector("#river-iframe iframe");
+    if (el) {
+      el.remove();
+    }
+  }
+
+  resume() {
+    if (!this.halted) {
+      return;
+    }
+    this.halt = false;
+    let el = document.querySelector("#river-iframe");
+    let iframe = document.createElement("iframe");
+    iframe.src = this.url;
+    if (el) {
+      el.appendChild(iframe);
+    }
   }
 
   toggleVisible(visible) {
@@ -148,7 +171,7 @@ class RiverService {
 
     this.listen("new_session", e => {
       this.bool(e.reqId);
-      this.destroy();
+      this.halt();
     });
   }
 
@@ -324,7 +347,13 @@ class RiverService {
     }
   }
 
-  destroy() {}
+  destroy() {
+    var el = document.querySelector(this.parentEl);
+    if (el) {
+      el.remove();
+      el.removeEventListener("click", this.resume);
+    }
+  }
 }
 
 export default RiverService;
